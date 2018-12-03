@@ -99,6 +99,10 @@ public final class ByteStreams {
    * @return the number of bytes copied
    * @throws IOException if an I/O error occurs
    */
+  //@ requires from != null;
+  //@ requires to != null;
+  //@ ensures \typeof(\result) == type(int);
+  //@ signals_only IOException;
   @CanIgnoreReturnValue
   public static long copy(InputStream from, OutputStream to) throws IOException {
     checkNotNull(from);
@@ -125,6 +129,10 @@ public final class ByteStreams {
    * @return the number of bytes copied
    * @throws IOException if an I/O error occurs
    */
+  //@ requires from != null;
+  //@ requires to != null;
+  //@ ensures \typeof(\result) == type(int);
+  //@ signals_only IOException;
   @CanIgnoreReturnValue
   public static long copy(ReadableByteChannel from, WritableByteChannel to) throws IOException {
     checkNotNull(from);
@@ -216,6 +224,9 @@ public final class ByteStreams {
    * @return a byte array containing all the bytes from the stream
    * @throws IOException if an I/O error occurs
    */
+  //@ requires from != null;
+  //@ ensures \typeof(\result) == type(byte[]);
+  //@ signals_only IOException;
   public static byte[] toByteArray(InputStream in) throws IOException {
     checkNotNull(in);
     return toByteArrayInternal(in, new ArrayDeque<byte[]>(TO_BYTE_ARRAY_DEQUE_SIZE), 0);
@@ -265,6 +276,7 @@ public final class ByteStreams {
    *
    * @since 20.0
    */
+  //@ ensures \result != null;
   @CanIgnoreReturnValue
   public static long exhaust(InputStream in) throws IOException {
     long total = 0;
@@ -280,6 +292,7 @@ public final class ByteStreams {
    * Returns a new {@link ByteArrayDataInput} instance to read from the {@code bytes} array from the
    * beginning.
    */
+  //@ ensures \result != null;
   public static ByteArrayDataInput newDataInput(byte[] bytes) {
     return newDataInput(new ByteArrayInputStream(bytes));
   }
@@ -291,6 +304,7 @@ public final class ByteStreams {
    * @throws IndexOutOfBoundsException if {@code start} is negative or greater than the length of
    *     the array
    */
+  //@ signals_only IndexOutOfBoundsException;
   public static ByteArrayDataInput newDataInput(byte[] bytes, int start) {
     checkPositionIndex(start, bytes.length);
     return newDataInput(new ByteArrayInputStream(bytes, start, bytes.length - start));
@@ -303,6 +317,7 @@ public final class ByteStreams {
    *
    * @since 17.0
    */
+  //@ ensures \result != null;
   public static ByteArrayDataInput newDataInput(ByteArrayInputStream byteArrayInputStream) {
     return new ByteArrayDataInputStream(checkNotNull(byteArrayInputStream));
   }
@@ -453,6 +468,7 @@ public final class ByteStreams {
   }
 
   /** Returns a new {@link ByteArrayDataOutput} instance with a default size. */
+  //@ ensures \result != null;
   public static ByteArrayDataOutput newDataOutput() {
     return newDataOutput(new ByteArrayOutputStream());
   }
@@ -463,6 +479,7 @@ public final class ByteStreams {
    *
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ signals_only IllegalArgumentException;
   public static ByteArrayDataOutput newDataOutput(int size) {
     // When called at high frequency, boxing size generates too much garbage,
     // so avoid doing that if we can.
@@ -484,6 +501,7 @@ public final class ByteStreams {
    *
    * @since 17.0
    */
+  //@ ensures \result != null;
   public static ByteArrayDataOutput newDataOutput(ByteArrayOutputStream byteArrayOutputSteam) {
     return new ByteArrayDataOutputStream(checkNotNull(byteArrayOutputSteam));
   }
@@ -660,6 +678,7 @@ public final class ByteStreams {
    *
    * @since 14.0 (since 1.0 as com.google.common.io.NullOutputStream)
    */
+  //@ ensures \result != null;
   public static OutputStream nullOutputStream() {
     return NULL_OUTPUT_STREAM;
   }
@@ -672,6 +691,9 @@ public final class ByteStreams {
    * @return a length-limited {@link InputStream}
    * @since 14.0 (since 1.0 as com.google.common.io.LimitInputStream)
    */
+  //@ requires in != null;
+  //@ requires \typeof(limit) == \type(long);
+  //@ ensures \result != null;
   public static InputStream limit(InputStream in, long limit) {
     return new LimitedInputStream(in, limit);
   }
@@ -758,6 +780,10 @@ public final class ByteStreams {
    * @throws EOFException if this stream reaches the end before reading all the bytes.
    * @throws IOException if an I/O error occurs.
    */
+  //@ requires in != null;
+  //@ requires \typeof(b) == \type(byte[]);
+  //@ signals_only EOFException;
+  //@ signals_only IOException;
   public static void readFully(InputStream in, byte[] b) throws IOException {
     readFully(in, b, 0, b.length);
   }
@@ -774,6 +800,12 @@ public final class ByteStreams {
    * @throws EOFException if this stream reaches the end before reading all the bytes.
    * @throws IOException if an I/O error occurs.
    */
+  //@ requires in != null;
+  //@ requires \typeof(b) == \type(byte[]);
+  //@ requires \typeof(off) == \type(int);
+  //@ requires \typeof(len) == \type(int);
+  //@ signals_only EOFException;
+  //@ signals_only IOException;
   public static void readFully(InputStream in, byte[] b, int off, int len) throws IOException {
     int read = read(in, b, off, len);
     if (read != len) {
@@ -791,6 +823,10 @@ public final class ByteStreams {
    * @throws EOFException if this stream reaches the end before skipping all the bytes
    * @throws IOException if an I/O error occurs, or the stream does not support skipping
    */
+  //@ requires in != null;
+  //@ requires \typeof(n) == \type(long);
+  //@ signals_only EOFException;
+  //@ signals_only IOException;
   public static void skipFully(InputStream in, long n) throws IOException {
     long skipped = skipUpTo(in, n);
     if (skipped < n) {
@@ -849,6 +885,9 @@ public final class ByteStreams {
    * @throws IOException if an I/O error occurs
    * @since 14.0
    */
+  //@ requires input != null;
+  //@ requires processor != null;
+  //@ signals_only IOException;
   @CanIgnoreReturnValue // some processors won't return a useful result
   public static <T> T readBytes(InputStream input, ByteProcessor<T> processor) throws IOException {
     checkNotNull(input);
@@ -884,6 +923,11 @@ public final class ByteStreams {
    * @return the number of bytes read
    * @throws IOException if an I/O error occurs
    */
+  //@ requires in != null;
+  //@ requires \typeof(b) == \type(byte[]);
+  //@ requires \typeof(off) == \type(int);
+  //@ requires \typeof(len) == \type(int);
+  //@ signals_only IOException;
   @CanIgnoreReturnValue
   // Sometimes you don't care how many bytes you actually read, I guess.
   // (You know that it's either going to read len bytes or stop at EOF.)
