@@ -51,6 +51,7 @@ public final class MoreObjects {
    * @throws NullPointerException if both {@code first} and {@code second} are null
    * @since 18.0 (since 3.0 as {@code Objects.firstNonNull()}).
    */
+  //@ if (first == null || second == null) signals_only NullPointerException;
   public static <T> T firstNonNull(@Nullable T first, @Nullable T second) {
     if (first != null) {
       return first;
@@ -101,6 +102,7 @@ public final class MoreObjects {
    *     class name
    * @since 18.0 (since 2.0 as {@code Objects.toStringHelper()}).
    */
+  //@ requires \typeof(self) == \type(Object);
   public static ToStringHelper toStringHelper(Object self) {
     return new ToStringHelper(self.getClass().getSimpleName());
   }
@@ -115,6 +117,7 @@ public final class MoreObjects {
    * @param clazz the {@link Class} of the instance
    * @since 18.0 (since 7.0 as {@code Objects.toStringHelper()}).
    */
+  //@ ensures \typeof(\result) == \type(ToStringHelper);
   public static ToStringHelper toStringHelper(Class<?> clazz) {
     return new ToStringHelper(clazz.getSimpleName());
   }
@@ -127,6 +130,8 @@ public final class MoreObjects {
    * @param className the name of the instance type
    * @since 18.0 (since 7.0 as {@code Objects.toStringHelper()}).
    */
+  //@ requires \typeof(className) == \type(String);
+  //@ ensures \typeof(\result) == \type(ToStringHelper);
   public static ToStringHelper toStringHelper(String className) {
     return new ToStringHelper(className);
   }
@@ -328,6 +333,7 @@ public final class MoreObjects {
      * removed, so this only allows limited reuse of the helper instance. The helper allows
      * duplication of properties (multiple name/value pairs with the same name can be added).
      */
+    //@ also ensures \typeof(\result) == \type(String);
     @Override
     public String toString() {
       // create a copy to keep it consistent in case value changes
