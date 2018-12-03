@@ -122,6 +122,8 @@ public final class Preconditions {
    * @param expression a boolean expression
    * @throws IllegalArgumentException if {@code expression} is false
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ signals_only IllegalArgumentException;
   public static void checkArgument(boolean expression) {
     if (!expression) {
       throw new IllegalArgumentException();
@@ -136,6 +138,9 @@ public final class Preconditions {
    *     string using {@link String#valueOf(Object)}
    * @throws IllegalArgumentException if {@code expression} is false
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ requires \typeof(errorMessage) == \type(Object);
+  //@ signals_only IllegalArgumentException;
   public static void checkArgument(boolean expression, @Nullable Object errorMessage) {
     if (!expression) {
       throw new IllegalArgumentException(String.valueOf(errorMessage));
@@ -155,6 +160,10 @@ public final class Preconditions {
    *     are converted to strings using {@link String#valueOf(Object)}.
    * @throws IllegalArgumentException if {@code expression} is false
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ requires \typeof(errorMessageTemplate) == \type(String);
+  //@ requires \typeof(errorMessageArgs) == \type(Object);
+  //@ if (!expression) signals_only IllegalArgumentException;
   public static void checkArgument(
       boolean expression,
       @Nullable String errorMessageTemplate,
@@ -171,6 +180,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(boolean b, @Nullable String errorMessageTemplate, char p1) {
     if (!b) {
       throw new IllegalArgumentException(lenientFormat(errorMessageTemplate, p1));
@@ -184,6 +194,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(boolean b, @Nullable String errorMessageTemplate, int p1) {
     if (!b) {
       throw new IllegalArgumentException(lenientFormat(errorMessageTemplate, p1));
@@ -197,6 +208,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(boolean b, @Nullable String errorMessageTemplate, long p1) {
     if (!b) {
       throw new IllegalArgumentException(lenientFormat(errorMessageTemplate, p1));
@@ -210,6 +222,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1) {
     if (!b) {
@@ -224,6 +237,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, char p1, char p2) {
     if (!b) {
@@ -238,6 +252,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, char p1, int p2) {
     if (!b) {
@@ -252,6 +267,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, char p1, long p2) {
     if (!b) {
@@ -266,6 +282,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, char p1, @Nullable Object p2) {
     if (!b) {
@@ -280,6 +297,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, int p1, char p2) {
     if (!b) {
@@ -294,6 +312,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, int p1, int p2) {
     if (!b) {
@@ -308,6 +327,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, int p1, long p2) {
     if (!b) {
@@ -322,6 +342,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, int p1, @Nullable Object p2) {
     if (!b) {
@@ -336,6 +357,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, long p1, char p2) {
     if (!b) {
@@ -350,6 +372,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, long p1, int p2) {
     if (!b) {
@@ -364,6 +387,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, long p1, long p2) {
     if (!b) {
@@ -378,6 +402,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, long p1, @Nullable Object p2) {
     if (!b) {
@@ -392,6 +417,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, char p2) {
     if (!b) {
@@ -406,6 +432,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, int p2) {
     if (!b) {
@@ -420,6 +447,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, long p2) {
     if (!b) {
@@ -434,6 +462,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, @Nullable Object p2) {
     if (!b) {
@@ -448,6 +477,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b,
       @Nullable String errorMessageTemplate,
@@ -466,6 +496,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkArgument(
       boolean b,
       @Nullable String errorMessageTemplate,
@@ -486,6 +517,8 @@ public final class Preconditions {
    * @throws IllegalStateException if {@code expression} is false
    * @see Verify#verify Verify.verify()
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ if (!expression) signals_only IllegalArgumentException;
   public static void checkState(boolean expression) {
     if (!expression) {
       throw new IllegalStateException();
@@ -502,6 +535,9 @@ public final class Preconditions {
    * @throws IllegalStateException if {@code expression} is false
    * @see Verify#verify Verify.verify()
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ requires \typeof(errorMessage) == \type(Object);
+  //@ if (!expression) signals_only IllegalArgumentException;
   public static void checkState(boolean expression, @Nullable Object errorMessage) {
     if (!expression) {
       throw new IllegalStateException(String.valueOf(errorMessage));
@@ -523,6 +559,10 @@ public final class Preconditions {
    * @throws IllegalStateException if {@code expression} is false
    * @see Verify#verify Verify.verify()
    */
+  //@ requires \typeof(expression) == \type(boolean);
+  //@ requires \typeof(errorMessageTemplate) == \type(String);
+  //@ requires \typeof(errorMessageArgs) == \type(Object);
+  //@ if (!expression) signals_only IllegalArgumentException;
   public static void checkState(
       boolean expression,
       @Nullable String errorMessageTemplate,
@@ -540,6 +580,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, char p1) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1));
@@ -554,6 +595,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, int p1) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1));
@@ -568,6 +610,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, long p1) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1));
@@ -582,6 +625,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1) {
     if (!b) {
@@ -597,6 +641,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, char p1, char p2) {
     if (!b) {
@@ -612,6 +657,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, char p1, int p2) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1, p2));
@@ -626,6 +672,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, char p1, long p2) {
     if (!b) {
@@ -641,6 +688,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, char p1, @Nullable Object p2) {
     if (!b) {
@@ -656,6 +704,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, int p1, char p2) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1, p2));
@@ -670,6 +719,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, int p1, int p2) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1, p2));
@@ -684,6 +734,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, int p1, long p2) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1, p2));
@@ -698,6 +749,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, int p1, @Nullable Object p2) {
     if (!b) {
@@ -713,6 +765,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, long p1, char p2) {
     if (!b) {
@@ -728,6 +781,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(boolean b, @Nullable String errorMessageTemplate, long p1, int p2) {
     if (!b) {
       throw new IllegalStateException(lenientFormat(errorMessageTemplate, p1, p2));
@@ -742,6 +796,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, long p1, long p2) {
     if (!b) {
@@ -757,6 +812,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, long p1, @Nullable Object p2) {
     if (!b) {
@@ -772,6 +828,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, char p2) {
     if (!b) {
@@ -787,6 +844,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, int p2) {
     if (!b) {
@@ -802,6 +860,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, long p2) {
     if (!b) {
@@ -817,6 +876,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b, @Nullable String errorMessageTemplate, @Nullable Object p1, @Nullable Object p2) {
     if (!b) {
@@ -832,6 +892,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b,
       @Nullable String errorMessageTemplate,
@@ -851,6 +912,7 @@ public final class Preconditions {
    *
    * @since 20.0 (varargs overload since 2.0)
    */
+  //@ requires \typeof(b) == \type(boolean);
   public static void checkState(
       boolean b,
       @Nullable String errorMessageTemplate,
@@ -871,6 +933,8 @@ public final class Preconditions {
    * @throws NullPointerException if {@code reference} is null
    * @see Verify#verifyNotNull Verify.verifyNotNull()
    */
+  //@ ensures \result != null;
+  //@ signals_only NullPointerException;
   @CanIgnoreReturnValue
   public static <T> T checkNotNull(T reference) {
     if (reference == null) {
@@ -889,6 +953,9 @@ public final class Preconditions {
    * @throws NullPointerException if {@code reference} is null
    * @see Verify#verifyNotNull Verify.verifyNotNull()
    */
+  //@ requires \typeof(errorMessage) == \type(Object);
+  //@ ensures \result != null;
+  //@ signals_only NullPointerException;
   @CanIgnoreReturnValue
   public static <T> T checkNotNull(T reference, @Nullable Object errorMessage) {
     if (reference == null) {
@@ -912,6 +979,10 @@ public final class Preconditions {
    * @throws NullPointerException if {@code reference} is null
    * @see Verify#verifyNotNull Verify.verifyNotNull()
    */
+  //@ requires \typeof(errorMessageTemplate) == \type(String);
+  //@ requires \typeof(errorMessageArgs) == \type(Object);
+  //@ ensures \result != null;
+  //@ signals_only NullPointerException;
   @CanIgnoreReturnValue
   public static <T> T checkNotNull(
       T reference, @Nullable String errorMessageTemplate, Object @Nullable... errorMessageArgs) {
@@ -1306,6 +1377,10 @@ public final class Preconditions {
    * @throws IndexOutOfBoundsException if {@code index} is negative or is not less than {@code size}
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ requires \typeof(index) == \type(int);
+  //@ requires \typeof(size) == \type(int);
+  //@ if (index < 0 || index >= size) signals_only IndexOutOfBoundsException;
+  //@ if (size < 0) signals_only IllegalArgumentException;
   @CanIgnoreReturnValue
   public static int checkElementIndex(int index, int size) {
     return checkElementIndex(index, size, "index");
@@ -1322,6 +1397,11 @@ public final class Preconditions {
    * @throws IndexOutOfBoundsException if {@code index} is negative or is not less than {@code size}
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ requires \typeof(index) == \type(int);
+  //@ requires \typeof(size) == \type(int);
+  //@ requires \typeof(desc) == \type(String);
+  //@ if (index < 0 || index >= size) signals_only IndexOutOfBoundsException;
+  //@ if (size < 0) signals_only IllegalArgumentException;
   @CanIgnoreReturnValue
   public static int checkElementIndex(int index, int size, @Nullable String desc) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
@@ -1351,6 +1431,10 @@ public final class Preconditions {
    * @throws IndexOutOfBoundsException if {@code index} is negative or is greater than {@code size}
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ requires \typeof(index) == \type(int);
+  //@ requires \typeof(size) == \type(int);
+  //@ if (index < 0 || index > size) signals_only IndexOutOfBoundsException;
+  //@ if (size < 0) signals_only IllegalArgumentException;
   @CanIgnoreReturnValue
   public static int checkPositionIndex(int index, int size) {
     return checkPositionIndex(index, size, "index");
@@ -1367,6 +1451,11 @@ public final class Preconditions {
    * @throws IndexOutOfBoundsException if {@code index} is negative or is greater than {@code size}
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ requires \typeof(index) == \type(int);
+  //@ requires \typeof(size) == \type(int);
+  //@ requires \typeof(desc) == \type(String);
+  //@ if (index < 0 || index > size) signals_only IndexOutOfBoundsException;
+  //@ if (size < 0) signals_only IllegalArgumentException;
   @CanIgnoreReturnValue
   public static int checkPositionIndex(int index, int size, @Nullable String desc) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
@@ -1398,6 +1487,13 @@ public final class Preconditions {
    *     or if {@code end} is less than {@code start}
    * @throws IllegalArgumentException if {@code size} is negative
    */
+  //@ requires \typeof(start) == \type(int);
+  //@ requires \typeof(end) == \type(int);
+  //@ requires \typeof(size) == \type(int);
+  //@ if (start < 0 || start > size) signals_only IndexOutOfBoundsException;
+  //@ if (end < 0 || end > size) signals_only IndexOutOfBoundsException;
+  //@ if (end < start) signals_only IndexOutOfBoundsException;
+  //@ if (size < 0) signals_only IllegalArgumentException;
   public static void checkPositionIndexes(int start, int end, int size) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
     if (start < 0 || end < start || end > size) {
