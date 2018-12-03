@@ -59,6 +59,7 @@ public interface Predicate<T> extends java.util.function.Predicate<T> {
    *     arguments
    */
   @CanIgnoreReturnValue
+  //@ signals_only NullPointerException;
   boolean apply(@Nullable T input);
 
   /**
