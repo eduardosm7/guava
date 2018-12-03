@@ -44,17 +44,22 @@ public final class CountingOutputStream extends FilterOutputStream {
   }
 
   /** Returns the number of bytes written. */
+  //@ ensures \typeof(\result) == \type(long);
   public long getCount() {
     return count;
   }
 
   @Override
+  //@ also requires b != null && off >= 0 && len >= 0;
+  //@ also signals_only IOException;
   public void write(byte[] b, int off, int len) throws IOException {
     out.write(b, off, len);
     count += len;
   }
 
   @Override
+  //@ also requires b >= 0;
+  //@ also signals_only IOException;
   public void write(int b) throws IOException {
     out.write(b);
     count++;
@@ -64,6 +69,7 @@ public final class CountingOutputStream extends FilterOutputStream {
   // it silently ignores any exception thrown by flush(). Instead, just close the delegate stream.
   // It should flush itself if necessary.
   @Override
+  //@ also signals_only IOException;
   public void close() throws IOException {
     out.close();
   }
