@@ -120,6 +120,7 @@ public final class Closer implements Closeable {
    * @return the given {@code closeable}
    */
   // close. this word no longer has any meaning to me.
+  //@ ensures \result != null;
   @CanIgnoreReturnValue
   public <C extends Closeable> C register(@Nullable C closeable) {
     if (closeable != null) {
@@ -142,6 +143,7 @@ public final class Closer implements Closeable {
    * @return this method does not return; it always throws
    * @throws IOException when the given throwable is an IOException
    */
+  //@ signals_only IOException;
   public RuntimeException rethrow(Throwable e) throws IOException {
     checkNotNull(e);
     thrown = e;
@@ -163,6 +165,8 @@ public final class Closer implements Closeable {
    * @throws IOException when the given throwable is an IOException
    * @throws X when the given throwable is of the declared type X
    */
+  //@ signals_only IOException;
+  //@ signals_only X;
   public <X extends Exception> RuntimeException rethrow(Throwable e, Class<X> declaredType)
       throws IOException, X {
     checkNotNull(e);
@@ -187,6 +191,9 @@ public final class Closer implements Closeable {
    * @throws X1 when the given throwable is of the declared type X1
    * @throws X2 when the given throwable is of the declared type X2
    */
+  //@ signals_only IOException;
+  //@ signals_only X1;
+  //@ signals_only X2;
   public <X1 extends Exception, X2 extends Exception> RuntimeException rethrow(
       Throwable e, Class<X1> declaredType1, Class<X2> declaredType2) throws IOException, X1, X2 {
     checkNotNull(e);
