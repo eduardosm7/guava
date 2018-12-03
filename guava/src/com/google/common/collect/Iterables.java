@@ -151,6 +151,8 @@ public final class Iterables {
    * @return {@code true} if any element was removed from {@code iterable}
    */
   @CanIgnoreReturnValue
+  //@ requires removeFrom != null && elementsToRemove != null;
+  //@ ensures \typeof(\result) == \type(boolean);
   public static boolean removeAll(Iterable<?> removeFrom, Collection<?> elementsToRemove) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).removeAll(checkNotNull(elementsToRemove))
@@ -168,6 +170,8 @@ public final class Iterables {
    * @return {@code true} if any element was removed from {@code iterable}
    */
   @CanIgnoreReturnValue
+  //@ requires removeFrom != null && elementsToRetain != null;
+  //@ ensures \typeof(\result) == \type(boolean);
   public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).retainAll(checkNotNull(elementsToRetain))
@@ -191,6 +195,8 @@ public final class Iterables {
    * @since 2.0
    */
   @CanIgnoreReturnValue
+  //@ requires removeFrom != null && predicate != null;
+  //@ ensures \typeof(\result) == \type(boolean);
   public static <T> boolean removeIf(Iterable<T> removeFrom, Predicate<? super T> predicate) {
     if (removeFrom instanceof Collection) {
       return ((Collection<T>) removeFrom).removeIf(predicate);
@@ -276,6 +282,7 @@ public final class Iterables {
    * @return a newly-allocated array into which all the elements of the iterable have been copied
    */
   @GwtIncompatible // Array.newInstance(Class, int)
+  //@ requires iterable != null && type != null;
   public static <T> T[] toArray(Iterable<? extends T> iterable, Class<T> type) {
     return toArray(iterable, ObjectArrays.newArray(type, 0));
   }
@@ -291,6 +298,7 @@ public final class Iterables {
    * @param iterable the iterable to copy
    * @return a newly-allocated array into which all the elements of the iterable have been copied
    */
+  //@ requires iterable != null;
   static Object[] toArray(Iterable<?> iterable) {
     return castOrCopyToCollection(iterable).toArray();
   }
@@ -506,6 +514,7 @@ public final class Iterables {
    *     into partitions
    * @throws IllegalArgumentException if {@code size} is nonpositive
    */
+  //@ requires iterable != null && size >= 0;
   public static <T> Iterable<List<T>> partition(final Iterable<T> iterable, final int size) {
     checkNotNull(iterable);
     checkArgument(size > 0);
@@ -532,6 +541,7 @@ public final class Iterables {
    *     into partitions (the final iterable may have trailing null elements)
    * @throws IllegalArgumentException if {@code size} is nonpositive
    */
+  //@ requires iterable != null && size >= 0;
   public static <T> Iterable<List<T>> paddedPartition(final Iterable<T> iterable, final int size) {
     checkNotNull(iterable);
     checkArgument(size > 0);
@@ -722,6 +732,7 @@ public final class Iterables {
    * @throws IndexOutOfBoundsException if {@code position} is negative or greater than or equal to
    *     the size of {@code iterable}
    */
+  //@ requires iterable != null && position >= 0;
   public static <T> T get(Iterable<T> iterable, int position) {
     checkNotNull(iterable);
     return (iterable instanceof List)
@@ -744,6 +755,7 @@ public final class Iterables {
    * @throws IndexOutOfBoundsException if {@code position} is negative
    * @since 4.0
    */
+  //@ requires iterable != null && position >= 0;
   public static <T> @Nullable T get(
       Iterable<? extends T> iterable, int position, @Nullable T defaultValue) {
     checkNotNull(iterable);
@@ -848,6 +860,7 @@ public final class Iterables {
    *
    * @since 3.0
    */
+  //@ requires iterable != null && numberToSkip >= 0;
   public static <T> Iterable<T> skip(final Iterable<T> iterable, final int numberToSkip) {
     checkNotNull(iterable);
     checkArgument(numberToSkip >= 0, "number to skip cannot be negative");
@@ -918,6 +931,7 @@ public final class Iterables {
    * @throws IllegalArgumentException if {@code limitSize} is negative
    * @since 3.0
    */
+  //@ requires iterable != null && limitSize >= 0;
   public static <T> Iterable<T> limit(final Iterable<T> iterable, final int limitSize) {
     checkNotNull(iterable);
     checkArgument(limitSize >= 0, "limit is negative");
@@ -950,6 +964,7 @@ public final class Iterables {
    * @see Iterators#consumingIterator(Iterator)
    * @since 2.0
    */
+  //@ requires iterable != null;
   public static <T> Iterable<T> consumingIterable(final Iterable<T> iterable) {
     checkNotNull(iterable);
 
@@ -981,6 +996,7 @@ public final class Iterables {
    *
    * @return {@code true} if the iterable contains no elements
    */
+  //@ ensures \typeof(\result) == \type(boolean);
   public static boolean isEmpty(Iterable<?> iterable) {
     if (iterable instanceof Collection) {
       return ((Collection<?>) iterable).isEmpty();
