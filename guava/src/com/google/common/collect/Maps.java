@@ -143,6 +143,7 @@ public final class Maps {
    * @return an immutable map containing those entries
    * @since 14.0
    */
+  //@ ensures \result != null;
   @GwtCompatible(serializable = true)
   @Beta
   public static <K extends Enum<K>, V> ImmutableMap<K, V> immutableEnumMap(
@@ -218,6 +219,7 @@ public final class Maps {
    *
    * @since 21.0
    */
+  //@ signals_only IllegalStateException;
   @Beta
   public static <T, K extends Enum<K>, V> Collector<T, ?, ImmutableMap<K, V>> toImmutableEnumMap(
       java.util.function.Function<? super T, ? extends K> keyFunction,
@@ -251,6 +253,7 @@ public final class Maps {
    *
    * @since 21.0
    */
+  //@ ensures \result != null;
   @Beta
   public static <T, K extends Enum<K>, V> Collector<T, ?, ImmutableMap<K, V>> toImmutableEnumMap(
       java.util.function.Function<? super T, ? extends K> keyFunction,
@@ -284,6 +287,7 @@ public final class Maps {
    *
    * @return a new, empty {@code HashMap}
    */
+  //@ ensures \result != null;
   public static <K, V> HashMap<K, V> newHashMap() {
     return new HashMap<>();
   }
@@ -302,6 +306,7 @@ public final class Maps {
    * @param map the mappings to be placed in the new map
    * @return a new {@code HashMap} initialized with the mappings from {@code map}
    */
+  //@ ensures \result != null;
   public static <K, V> HashMap<K, V> newHashMap(Map<? extends K, ? extends V> map) {
     return new HashMap<>(map);
   }
@@ -317,6 +322,9 @@ public final class Maps {
    *     without resizing
    * @throws IllegalArgumentException if {@code expectedSize} is negative
    */
+  //@ requires \typeof(expectedSize) == \type(int);
+  //@ ensures \result != null;
+  //@ signals_only IllegalArgumentException;
   public static <K, V> HashMap<K, V> newHashMapWithExpectedSize(int expectedSize) {
     return new HashMap<>(capacity(expectedSize));
   }
@@ -325,6 +333,7 @@ public final class Maps {
    * Returns a capacity that is sufficient to keep the map from being resized as long as it grows no
    * larger than expectedSize and the load factor is ≥ its default (0.75).
    */
+  //@ requires \typeof(expectedSize) == \type(int);
   static int capacity(int expectedSize) {
     if (expectedSize < 3) {
       checkNonnegative(expectedSize, "expectedSize");
@@ -350,6 +359,7 @@ public final class Maps {
    *
    * @return a new, empty {@code LinkedHashMap}
    */
+  //@ensures \result != null;
   public static <K, V> LinkedHashMap<K, V> newLinkedHashMap() {
     return new LinkedHashMap<>();
   }
@@ -367,6 +377,8 @@ public final class Maps {
    * @param map the mappings to be placed in the new map
    * @return a new, {@code LinkedHashMap} initialized with the mappings from {@code map}
    */
+  //@ requires map != null;
+  //@ensures \result != null;
   public static <K, V> LinkedHashMap<K, V> newLinkedHashMap(Map<? extends K, ? extends V> map) {
     return new LinkedHashMap<>(map);
   }
@@ -383,6 +395,9 @@ public final class Maps {
    * @throws IllegalArgumentException if {@code expectedSize} is negative
    * @since 19.0
    */
+  //@ requires \typeof(expectedSize) == \type(int);
+  //@ ensures \result != null;
+  //@ signals_only IllegalArgumentException;
   public static <K, V> LinkedHashMap<K, V> newLinkedHashMapWithExpectedSize(int expectedSize) {
     return new LinkedHashMap<>(capacity(expectedSize));
   }
@@ -392,6 +407,7 @@ public final class Maps {
    *
    * @since 3.0
    */
+  //@ ensures \result != null;
   public static <K, V> ConcurrentMap<K, V> newConcurrentMap() {
     return new ConcurrentHashMap<>();
   }
@@ -408,6 +424,7 @@ public final class Maps {
    *
    * @return a new, empty {@code TreeMap}
    */
+  //@ ensures \result != null;
   public static <K extends Comparable, V> TreeMap<K, V> newTreeMap() {
     return new TreeMap<>();
   }
@@ -428,6 +445,8 @@ public final class Maps {
    * @return a new {@code TreeMap} initialized with the mappings from {@code map} and using the
    *     comparator of {@code map}
    */
+  //@ requires map != null;
+  //@ ensures \result != null;
   public static <K, V> TreeMap<K, V> newTreeMap(SortedMap<K, ? extends V> map) {
     return new TreeMap<>(map);
   }
@@ -445,6 +464,8 @@ public final class Maps {
    * @param comparator the comparator to sort the keys with
    * @return a new, empty {@code TreeMap}
    */
+  //@ requires comparator != null;
+  //@ ensures \result != null;
   public static <C, K extends C, V> TreeMap<K, V> newTreeMap(@Nullable Comparator<C> comparator) {
     // Ideally, the extra type parameter "C" shouldn't be necessary. It is a
     // work-around of a compiler type inference quirk that prevents the
@@ -460,6 +481,8 @@ public final class Maps {
    * @param type the key type for this map
    * @return a new, empty {@code EnumMap}
    */
+  //@ requires type != null;
+  //@ ensures \result != null;
   public static <K extends Enum<K>, V> EnumMap<K, V> newEnumMap(Class<K> type) {
     return new EnumMap<>(checkNotNull(type));
   }
@@ -476,6 +499,9 @@ public final class Maps {
    * @throws IllegalArgumentException if {@code m} is not an {@code EnumMap} instance and contains
    *     no mappings
    */
+  //@ requires type != null;
+  //@ ensures \result != null;
+  //@ signals_only IllegalArgumentException;
   public static <K extends Enum<K>, V> EnumMap<K, V> newEnumMap(Map<K, ? extends V> map) {
     return new EnumMap<>(map);
   }
@@ -489,6 +515,7 @@ public final class Maps {
    *
    * @return a new, empty {@code IdentityHashMap}
    */
+  //@ ensures \result != null;
   public static <K, V> IdentityHashMap<K, V> newIdentityHashMap() {
     return new IdentityHashMap<>();
   }
@@ -508,6 +535,9 @@ public final class Maps {
    * @param right the map to treat as the "right" map for purposes of comparison
    * @return the difference between the two maps
    */
+  //@ requires left != null;
+  //@ requires right != null;
+  //@ ensures \result != null;
   @SuppressWarnings("unchecked")
   public static <K, V> MapDifference<K, V> difference(
       Map<? extends K, ? extends V> left, Map<? extends K, ? extends V> right) {
@@ -532,6 +562,10 @@ public final class Maps {
    * @return the difference between the two maps
    * @since 10.0
    */
+  //@ requires left != null;
+  //@ requires right != null;
+  //@ requires valueEquivalence != null;
+  //@ ensures \result != null;
   public static <K, V> MapDifference<K, V> difference(
       Map<? extends K, ? extends V> left,
       Map<? extends K, ? extends V> right,
@@ -563,6 +597,9 @@ public final class Maps {
    * @return the difference between the two maps
    * @since 11.0
    */
+  //@ requires left != null;
+  //@ requires right != null;
+  //@ ensures \result != null;
   public static <K, V> SortedMapDifference<K, V> difference(
       SortedMap<K, ? extends V> left, Map<? extends K, ? extends V> right) {
     checkNotNull(left);
@@ -772,6 +809,7 @@ public final class Maps {
    * This method is an abomination of generics; the only purpose of this method is to contain the
    * ugly type-casting in one place.
    */
+  //@ ensures \result != null;
   @SuppressWarnings("unchecked")
   static <E> Comparator<? super E> orNaturalOrder(@Nullable Comparator<? super E> comparator) {
     if (comparator != null) { // can't use ? : because of javac bug 5080917
@@ -1231,6 +1269,7 @@ public final class Maps {
    *     valueFunction} produces {@code null} for any key
    * @since 14.0
    */
+  //@ signals_only NullPointerException;
   public static <K, V> ImmutableMap<K, V> toMap(
       Iterable<K> keys, Function<? super K, V> valueFunction) {
     return toMap(keys.iterator(), valueFunction);
@@ -1249,6 +1288,7 @@ public final class Maps {
    *     valueFunction} produces {@code null} for any key
    * @since 14.0
    */
+  //@ signals_only NullPointerException;
   public static <K, V> ImmutableMap<K, V> toMap(
       Iterator<K> keys, Function<? super K, V> valueFunction) {
     checkNotNull(valueFunction);
@@ -1289,6 +1329,10 @@ public final class Maps {
    * @throws NullPointerException if any element of {@code values} is {@code null}, or if {@code
    *     keyFunction} produces {@code null} for any value
    */
+  //@ requires values != null;
+  //@ requires keyFunction != null;
+  //@ signals_only IllegalArgumentException;
+  //@ signals_only NullPointerException;
   @CanIgnoreReturnValue
   public static <K, V> ImmutableMap<K, V> uniqueIndex(
       Iterable<V> values, Function<? super V, K> keyFunction) {
@@ -1325,6 +1369,10 @@ public final class Maps {
    *     keyFunction} produces {@code null} for any value
    * @since 10.0
    */
+  //@ requires values != null;
+  //@ requires keyFunction != null;
+  //@ signals_only IllegalArgumentException;
+  //@ signals_only NullPointerException;
   @CanIgnoreReturnValue
   public static <K, V> ImmutableMap<K, V> uniqueIndex(
       Iterator<V> values, Function<? super V, K> keyFunction) {
@@ -1353,6 +1401,10 @@ public final class Maps {
    * @throws ClassCastException if any key in {@code Properties} is not a {@code String}
    * @throws NullPointerException if any key or value in {@code Properties} is null
    */
+  //@ requires properties != null;
+  //@ ensures \result != null;
+  //@ signals_only ClassCastException;
+  //@ signals_only NullPointerException;
   @GwtIncompatible // java.util.Properties
   public static ImmutableMap<String, String> fromProperties(Properties properties) {
     ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -1374,6 +1426,8 @@ public final class Maps {
    * @param key the key to be associated with the returned entry
    * @param value the value to be associated with the returned entry
    */
+  //@ requires key != null;
+  //@ requires value != null;
   @GwtCompatible(serializable = true)
   public static <K, V> Entry<K, V> immutableEntry(@Nullable K key, @Nullable V value) {
     return new ImmutableEntry<>(key, value);
@@ -1387,6 +1441,8 @@ public final class Maps {
    * @param entrySet the entries for which to return an unmodifiable view
    * @return an unmodifiable view of the entries
    */
+  //@ requires entrySet != null;
+  //@ ensures \result != null;
   static <K, V> Set<Entry<K, V>> unmodifiableEntrySet(Set<Entry<K, V>> entrySet) {
     return new UnmodifiableEntrySet<>(Collections.unmodifiableSet(entrySet));
   }
@@ -1400,6 +1456,8 @@ public final class Maps {
    * @param entry the entry for which to return an unmodifiable view
    * @return an unmodifiable view of the entry
    */
+  //@ requires entry != null;
+  //@ ensures \result != null;
   static <K, V> Entry<K, V> unmodifiableEntry(final Entry<? extends K, ? extends V> entry) {
     checkNotNull(entry);
     return new AbstractMapEntry<K, V>() {
@@ -1571,6 +1629,8 @@ public final class Maps {
    * @param bimap the bimap to be wrapped in a synchronized view
    * @return a synchronized view of the specified bimap
    */
+  //@ requires bimap != null;
+  //@ ensures \result != null;
   public static <K, V> BiMap<K, V> synchronizedBiMap(BiMap<K, V> bimap) {
     return Synchronized.biMap(bimap, null);
   }
@@ -1586,6 +1646,8 @@ public final class Maps {
    * @param bimap the bimap for which an unmodifiable view is to be returned
    * @return an unmodifiable view of the specified bimap
    */
+  //@ requires bimap != null;
+  //@ ensures \result != null;
   public static <K, V> BiMap<K, V> unmodifiableBiMap(BiMap<? extends K, ? extends V> bimap) {
     return new UnmodifiableBiMap<>(bimap, null);
   }
@@ -1921,6 +1983,9 @@ public final class Maps {
    * @param <V2> the value type of the output entry
    * @since 7.0
    */
+  //@ requires K != null;
+  //@ requires V1 != null;
+  //@ requires V2 != null;
   @FunctionalInterface
   public interface EntryTransformer<K, V1, V2> {
     /**
@@ -1937,6 +2002,7 @@ public final class Maps {
      * @throws NullPointerException if the key or value is null and this transformer does not accept
      *     null arguments
      */
+     //@ signals_only NullPointerException;
     V2 transformEntry(@Nullable K key, @Nullable V1 value);
   }
 
@@ -3263,6 +3329,8 @@ public final class Maps {
    * @return an unmodifiable view of the specified navigable map
    * @since 12.0
    */
+  //@ requires map != null;
+  //@ ensures \result != null;
   @GwtIncompatible // NavigableMap
   public static <K, V> NavigableMap<K, V> unmodifiableNavigableMap(
       NavigableMap<K, ? extends V> map) {
@@ -3468,6 +3536,8 @@ public final class Maps {
    * @return a synchronized view of the specified navigable map.
    * @since 13.0
    */
+  //@ requires navigableMap != null;
+  //@ ensures \result != null;
   @GwtIncompatible // NavigableMap
   public static <K, V> NavigableMap<K, V> synchronizedNavigableMap(
       NavigableMap<K, V> navigableMap) {
@@ -3626,6 +3696,9 @@ public final class Maps {
    * @param o the object that might be contained in {@code c}
    * @return {@code true} if {@code c} contains {@code o}
    */
+  //@ requires c != null;
+  //@ requires o != null;
+  //@ ensures \typeof(\result) == \type(boolean);
   static <K, V> boolean containsEntryImpl(Collection<Entry<K, V>> c, Object o) {
     if (!(o instanceof Entry)) {
       return false;
@@ -3644,6 +3717,9 @@ public final class Maps {
    * @param o the object to remove from {@code c}
    * @return {@code true} if {@code c} was changed
    */
+  //@ requires c != null;
+  //@ requires o != null;
+  //@ ensures \typeof(\result) == \type(boolean);
   static <K, V> boolean removeEntryImpl(Collection<Entry<K, V>> c, Object o) {
     if (!(o instanceof Entry)) {
       return false;
