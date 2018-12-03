@@ -286,6 +286,7 @@ public abstract class BaseEncoding {
    * @throws IllegalArgumentException if this padding character is already used in the alphabet or a
    *     separator
    */
+  //@ signals_only IllegalArgumentException;
   public abstract BaseEncoding withPadChar(char padChar);
 
   /**
@@ -297,6 +298,8 @@ public abstract class BaseEncoding {
    *     string, or if {@code n <= 0}
    * @throws UnsupportedOperationException if this encoding already uses a separator
    */
+  //@ signals_only IllegalArgumentException;
+  //@ signals_only UnsupportedOperationException;
   public abstract BaseEncoding withSeparator(String separator, int n);
 
   /**
@@ -306,6 +309,7 @@ public abstract class BaseEncoding {
    * @throws IllegalStateException if the alphabet used by this encoding contains mixed upper- and
    *     lower-case characters
    */
+  //@ signals_only IllegalStateException;
   public abstract BaseEncoding upperCase();
 
   /**
@@ -315,6 +319,7 @@ public abstract class BaseEncoding {
    * @throws IllegalStateException if the alphabet used by this encoding contains mixed upper- and
    *     lower-case characters
    */
+  //@ signals_only IllegalStateException;
   public abstract BaseEncoding lowerCase();
 
   private static final BaseEncoding BASE64 =
