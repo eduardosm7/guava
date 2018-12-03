@@ -83,6 +83,7 @@ public final class EqualsTester {
   private final RelationshipTester.ItemReporter itemReporter;
 
   /** Constructs an empty EqualsTester instance */
+  //@ ensures \result != null;
   public EqualsTester() {
     this(new RelationshipTester.ItemReporter());
   }
@@ -95,6 +96,7 @@ public final class EqualsTester {
    * Adds {@code equalityGroup} with objects that are supposed to be equal to each other and not
    * equal to any other equality groups added to this tester.
    */
+  //@ ensures \result != null;
   public EqualsTester addEqualityGroup(Object... equalityGroup) {
     checkNotNull(equalityGroup);
     equalityGroups.add(ImmutableList.copyOf(equalityGroup));
