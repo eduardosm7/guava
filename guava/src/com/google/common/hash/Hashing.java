@@ -61,6 +61,9 @@ public final class Hashing {
    * @return a hash function, described above, that produces hash codes of length {@code
    *     minimumBits} or greater
    */
+  //@ requires \typeof(minimumBits) == \type(int);
+  //@ requires minimumBits >= 0;
+  //@ ensures \result != null;
   public static HashFunction goodFastHash(int minimumBits) {
     int bits = checkPositiveAndMakeMultipleOf32(minimumBits);
 
@@ -97,6 +100,8 @@ public final class Hashing {
    *
    * <p>The exact C++ equivalent is the MurmurHash3_x86_32 function (Murmur3A).
    */
+  //@ requires \typeof(seed) == \type(int);
+  //@ ensures \result != null;
   public static HashFunction murmur3_32(int seed) {
     return new Murmur3_32HashFunction(seed);
   }
@@ -108,6 +113,7 @@ public final class Hashing {
    *
    * <p>The exact C++ equivalent is the MurmurHash3_x86_32 function (Murmur3A).
    */
+  //@ ensures \result != null;
   public static HashFunction murmur3_32() {
     return Murmur3_32HashFunction.MURMUR3_32;
   }
@@ -119,6 +125,7 @@ public final class Hashing {
    *
    * <p>The exact C++ equivalent is the MurmurHash3_x64_128 function (Murmur3F).
    */
+  //@ ensures \result != null;
   public static HashFunction murmur3_128(int seed) {
     return new Murmur3_128HashFunction(seed);
   }
@@ -130,6 +137,7 @@ public final class Hashing {
    *
    * <p>The exact C++ equivalent is the MurmurHash3_x64_128 function (Murmur3F).
    */
+  //@ ensures \result != null;
   public static HashFunction murmur3_128() {
     return Murmur3_128HashFunction.MURMUR3_128;
   }
@@ -140,6 +148,7 @@ public final class Hashing {
    *
    * @since 15.0
    */
+  //@ ensures \result != null;
   public static HashFunction sipHash24() {
     return SipHashFunction.SIP_HASH_24;
   }
@@ -150,6 +159,7 @@ public final class Hashing {
    *
    * @since 15.0
    */
+  //@ ensures \result != null;
   public static HashFunction sipHash24(long k0, long k1) {
     return new SipHashFunction(2, 4, k0, k1);
   }
@@ -211,6 +221,7 @@ public final class Hashing {
    *
    * @since 19.0
    */
+  //@ ensures \result != null;
   public static HashFunction sha384() {
     return Sha384Holder.SHA_384;
   }
@@ -239,6 +250,8 @@ public final class Hashing {
    * @throws IllegalArgumentException if the given key is inappropriate for initializing this MAC
    * @since 20.0
    */
+  //@ requires key != null;
+  //@ signals_only IllegalArgumentException;
   public static HashFunction hmacMd5(Key key) {
     return new MacHashFunction("HmacMD5", key, hmacToString("hmacMd5", key));
   }
@@ -252,6 +265,7 @@ public final class Hashing {
    * @param key the key material of the secret key
    * @since 20.0
    */
+  //@ requires key != null;
   public static HashFunction hmacMd5(byte[] key) {
     return hmacMd5(new SecretKeySpec(checkNotNull(key), "HmacMD5"));
   }
@@ -265,6 +279,8 @@ public final class Hashing {
    * @throws IllegalArgumentException if the given key is inappropriate for initializing this MAC
    * @since 20.0
    */
+  //@ requires key != null;
+  //@ signals_only IllegalArgumentException;
   public static HashFunction hmacSha1(Key key) {
     return new MacHashFunction("HmacSHA1", key, hmacToString("hmacSha1", key));
   }
@@ -278,6 +294,7 @@ public final class Hashing {
    * @param key the key material of the secret key
    * @since 20.0
    */
+  //@ requires key != null;
   public static HashFunction hmacSha1(byte[] key) {
     return hmacSha1(new SecretKeySpec(checkNotNull(key), "HmacSHA1"));
   }
@@ -291,6 +308,8 @@ public final class Hashing {
    * @throws IllegalArgumentException if the given key is inappropriate for initializing this MAC
    * @since 20.0
    */
+  //@ requires key != null;
+  //@ signals_only IllegalArgumentException;
   public static HashFunction hmacSha256(Key key) {
     return new MacHashFunction("HmacSHA256", key, hmacToString("hmacSha256", key));
   }
@@ -304,6 +323,7 @@ public final class Hashing {
    * @param key the key material of the secret key
    * @since 20.0
    */
+  //@ requires key != null;
   public static HashFunction hmacSha256(byte[] key) {
     return hmacSha256(new SecretKeySpec(checkNotNull(key), "HmacSHA256"));
   }
@@ -317,6 +337,8 @@ public final class Hashing {
    * @throws IllegalArgumentException if the given key is inappropriate for initializing this MAC
    * @since 20.0
    */
+  //@ requires key != null;
+  //@ signals_only IllegalArgumentException;
   public static HashFunction hmacSha512(Key key) {
     return new MacHashFunction("HmacSHA512", key, hmacToString("hmacSha512", key));
   }
@@ -330,6 +352,7 @@ public final class Hashing {
    * @param key the key material of the secret key
    * @since 20.0
    */
+  //@ requires key != null;
   public static HashFunction hmacSha512(byte[] key) {
     return hmacSha512(new SecretKeySpec(checkNotNull(key), "HmacSHA512"));
   }
@@ -350,6 +373,7 @@ public final class Hashing {
    *
    * @since 18.0
    */
+  //@ ensures \result != null;
   public static HashFunction crc32c() {
     return Crc32cHashFunction.CRC_32_C;
   }
@@ -366,6 +390,7 @@ public final class Hashing {
    *
    * @since 14.0
    */
+  //@ ensures \result != null;
   public static HashFunction crc32() {
     return ChecksumType.CRC_32.hashFunction;
   }
@@ -382,6 +407,7 @@ public final class Hashing {
    *
    * @since 14.0
    */
+  //@ ensures \result != null;
   public static HashFunction adler32() {
     return ChecksumType.ADLER_32.hashFunction;
   }
@@ -426,6 +452,7 @@ public final class Hashing {
    *
    * @since 20.0
    */
+  //@ ensures \result != null;
   public static HashFunction farmHashFingerprint64() {
     return FarmHashFingerprint64.FARMHASH_FINGERPRINT_64;
   }
@@ -522,6 +549,7 @@ public final class Hashing {
    * @throws IllegalArgumentException if {@code hashCodes} is empty, or the hash codes do not all
    *     have the same bit length
    */
+  //@ signals_only IllegalArgumentException;
   public static HashCode combineOrdered(Iterable<HashCode> hashCodes) {
     Iterator<HashCode> iterator = hashCodes.iterator();
     checkArgument(iterator.hasNext(), "Must be at least 1 hash code to combine.");
@@ -547,6 +575,7 @@ public final class Hashing {
    * @throws IllegalArgumentException if {@code hashCodes} is empty, or the hash codes do not all
    *     have the same bit length
    */
+  //@ signals_only IllegalArgumentException;
   public static HashCode combineUnordered(Iterable<HashCode> hashCodes) {
     Iterator<HashCode> iterator = hashCodes.iterator();
     checkArgument(iterator.hasNext(), "Must be at least 1 hash code to combine.");
@@ -578,6 +607,10 @@ public final class Hashing {
    *
    * @since 19.0
    */
+  //@requires first != null;
+  //@requires second != null;
+  //@requires rest != null;
+  //@ ensures \result != null;
   public static HashFunction concatenating(
       HashFunction first, HashFunction second, HashFunction... rest) {
     // We can't use Lists.asList() here because there's no hash->collect dependency
@@ -598,6 +631,8 @@ public final class Hashing {
    *
    * @since 19.0
    */
+  //@ requires hashFunctions != null;
+  //@ ensures \result != null;
   public static HashFunction concatenating(Iterable<HashFunction> hashFunctions) {
     checkNotNull(hashFunctions);
     // We can't use Iterables.toArray() here because there's no hash->collect dependency
