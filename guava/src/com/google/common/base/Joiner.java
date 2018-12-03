@@ -215,6 +215,7 @@ public class Joiner {
    * Returns a joiner with the same behavior as this one, except automatically substituting {@code
    * nullText} for any provided null elements.
    */
+  //@ ensures \typeof(\result) == \type(Joiner);
   public Joiner useForNull(final String nullText) {
     checkNotNull(nullText);
     return new Joiner(this) {
@@ -239,6 +240,7 @@ public class Joiner {
    * Returns a joiner with the same behavior as this joiner, except automatically skipping over any
    * provided null elements.
    */
+  //@ ensures \typeof(\result) == \type(Joiner);
   public Joiner skipNulls() {
     return new Joiner(this) {
       @Override
@@ -280,6 +282,7 @@ public class Joiner {
    *
    * @since 20.0
    */
+  //@ ensures \typeof(\result) == \type(MapJoiner);
   public MapJoiner withKeyValueSeparator(char keyValueSeparator) {
     return withKeyValueSeparator(String.valueOf(keyValueSeparator));
   }
@@ -288,6 +291,7 @@ public class Joiner {
    * Returns a {@code MapJoiner} using the given key-value separator, and the same configuration as
    * this {@code Joiner} otherwise.
    */
+  //@ ensures \typeof(\result) == \type(MapJoiner);
   public MapJoiner withKeyValueSeparator(String keyValueSeparator) {
     return new MapJoiner(this, keyValueSeparator);
   }
