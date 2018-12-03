@@ -161,6 +161,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
    *
    * @throws NullPointerException if any of the first {@code n} elements of {@code elements} is null
    */
+  //@ signals_only NullPointerException;
   private static <E> ImmutableSet<E> construct(int n, Object... elements) {
     switch (n) {
       case 0:
@@ -193,6 +194,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
    * @throws NullPointerException if any of {@code elements} is null
    * @since 7.0 (source-compatible since 2.0)
    */
+  //@ signals_only NullPointerException;
   public static <E> ImmutableSet<E> copyOf(Collection<? extends E> elements) {
     /*
      * TODO(lowasser): consider checking for ImmutableAsList here
@@ -224,6 +226,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
    *
    * @throws NullPointerException if any of {@code elements} is null
    */
+  //@ signals_only NullPointerException;
   public static <E> ImmutableSet<E> copyOf(Iterable<? extends E> elements) {
     return (elements instanceof Collection)
         ? copyOf((Collection<? extends E>) elements)
@@ -236,6 +239,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
    *
    * @throws NullPointerException if any of {@code elements} is null
    */
+  //@ signals_only NullPointerException;
   public static <E> ImmutableSet<E> copyOf(Iterator<? extends E> elements) {
     // We special-case for 0 or 1 elements, but anything further is madness.
     if (!elements.hasNext()) {
@@ -256,6 +260,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
    * @throws NullPointerException if any of {@code elements} is null
    * @since 3.0
    */
+  //@ signals_only NullPointerException;
   public static <E> ImmutableSet<E> copyOf(E[] elements) {
     switch (elements.length) {
       case 0:
@@ -503,6 +508,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
      * @throws NullPointerException if {@code elements} is null or contains a null element
      */
     @CanIgnoreReturnValue
+    //@ signals_only NullPointerException;
     public Builder<E> addAll(Iterable<? extends E> elements) {
       super.addAll(elements);
       return this;
