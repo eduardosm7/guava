@@ -177,6 +177,7 @@ public abstract class Optional<T> implements Serializable {
    *     false}); depending on this <i>specific</i> exception type (over the more general {@link
    *     RuntimeException}) is discouraged
    */
+  //@ signals_only IllegalStateException;
   public abstract T get();
 
   /**
@@ -236,6 +237,7 @@ public abstract class Optional<T> implements Serializable {
    * @throws NullPointerException if this optional's value is absent and the supplier returns {@code
    *     null}
    */
+  //@ signals_only NullPointerException;
   @Beta
   public abstract T or(Supplier<? extends T> supplier);
 
@@ -282,6 +284,7 @@ public abstract class Optional<T> implements Serializable {
    * @throws NullPointerException if the function returns {@code null}
    * @since 12.0
    */
+  //@ signals_only NullPointerException;
   public abstract <V> Optional<V> transform(Function<? super T, V> function);
 
   /**
@@ -291,6 +294,7 @@ public abstract class Optional<T> implements Serializable {
    *
    * <p><b>Comparison to {@code java.util.Optional}:</b> no differences.
    */
+  //@ ensures \typeof(\result) == \type(boolean);
   @Override
   public abstract boolean equals(@Nullable Object object);
 
@@ -300,6 +304,7 @@ public abstract class Optional<T> implements Serializable {
    * <p><b>Comparison to {@code java.util.Optional}:</b> this class leaves the specific choice of
    * hash code unspecified, unlike the Java 8 equivalent.
    */
+  //@ ensures \typeof(\result) == \type(int);
   @Override
   public abstract int hashCode();
 
@@ -309,6 +314,7 @@ public abstract class Optional<T> implements Serializable {
    * <p><b>Comparison to {@code java.util.Optional}:</b> this class leaves the specific string
    * representation unspecified, unlike the Java 8 equivalent.
    */
+  //@ ensures \typeof(\result) == \type(String);
   @Override
   public abstract String toString();
 
