@@ -101,7 +101,7 @@ public final class ByteStreams {
    */
   //@ requires from != null;
   //@ requires to != null;
-  //@ ensures \typeof(\result) == type(int);
+  //@ ensures \typeof(\result) == \type(int);
   //@ signals_only IOException;
   @CanIgnoreReturnValue
   public static long copy(InputStream from, OutputStream to) throws IOException {
@@ -131,7 +131,7 @@ public final class ByteStreams {
    */
   //@ requires from != null;
   //@ requires to != null;
-  //@ ensures \typeof(\result) == type(int);
+  //@ ensures \typeof(\result) == \type(int);
   //@ signals_only IOException;
   @CanIgnoreReturnValue
   public static long copy(ReadableByteChannel from, WritableByteChannel to) throws IOException {
@@ -224,7 +224,6 @@ public final class ByteStreams {
    * @return a byte array containing all the bytes from the stream
    * @throws IOException if an I/O error occurs
    */
-  //@ requires from != null;
   //@ ensures \typeof(\result) == type(byte[]);
   //@ signals_only IOException;
   public static byte[] toByteArray(InputStream in) throws IOException {
@@ -782,8 +781,8 @@ public final class ByteStreams {
    */
   //@ requires in != null;
   //@ requires \typeof(b) == \type(byte[]);
-  //@ signals_only EOFException;
-  //@ signals_only IOException;
+  //@ signals (EOFException);
+  //@ signals (IOException);
   public static void readFully(InputStream in, byte[] b) throws IOException {
     readFully(in, b, 0, b.length);
   }
@@ -804,8 +803,8 @@ public final class ByteStreams {
   //@ requires \typeof(b) == \type(byte[]);
   //@ requires \typeof(off) == \type(int);
   //@ requires \typeof(len) == \type(int);
-  //@ signals_only EOFException;
-  //@ signals_only IOException;
+  //@ signals (EOFException);
+  //@ signals (IOException);
   public static void readFully(InputStream in, byte[] b, int off, int len) throws IOException {
     int read = read(in, b, off, len);
     if (read != len) {
@@ -825,8 +824,8 @@ public final class ByteStreams {
    */
   //@ requires in != null;
   //@ requires \typeof(n) == \type(long);
-  //@ signals_only EOFException;
-  //@ signals_only IOException;
+  //@ signals (EOFException);
+  //@ signals (IOException);
   public static void skipFully(InputStream in, long n) throws IOException {
     long skipped = skipUpTo(in, n);
     if (skipped < n) {

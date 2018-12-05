@@ -150,9 +150,9 @@ public final class Iterables {
    * @param elementsToRemove the elements to remove
    * @return {@code true} if any element was removed from {@code iterable}
    */
-  @CanIgnoreReturnValue
   //@ requires removeFrom != null && elementsToRemove != null;
   //@ ensures \typeof(\result) == \type(boolean);
+  @CanIgnoreReturnValue
   public static boolean removeAll(Iterable<?> removeFrom, Collection<?> elementsToRemove) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).removeAll(checkNotNull(elementsToRemove))
@@ -169,9 +169,9 @@ public final class Iterables {
    * @param elementsToRetain the elements to retain
    * @return {@code true} if any element was removed from {@code iterable}
    */
-  @CanIgnoreReturnValue
   //@ requires removeFrom != null && elementsToRetain != null;
   //@ ensures \typeof(\result) == \type(boolean);
+  @CanIgnoreReturnValue
   public static boolean retainAll(Iterable<?> removeFrom, Collection<?> elementsToRetain) {
     return (removeFrom instanceof Collection)
         ? ((Collection<?>) removeFrom).retainAll(checkNotNull(elementsToRetain))
@@ -194,9 +194,9 @@ public final class Iterables {
    * @throws UnsupportedOperationException if the iterable does not support {@code remove()}.
    * @since 2.0
    */
-  @CanIgnoreReturnValue
   //@ requires removeFrom != null && predicate != null;
   //@ ensures \typeof(\result) == \type(boolean);
+  @CanIgnoreReturnValue
   public static <T> boolean removeIf(Iterable<T> removeFrom, Predicate<? super T> predicate) {
     if (removeFrom instanceof Collection) {
       return ((Collection<T>) removeFrom).removeIf(predicate);
@@ -281,8 +281,8 @@ public final class Iterables {
    * @param type the type of the elements
    * @return a newly-allocated array into which all the elements of the iterable have been copied
    */
-  @GwtIncompatible // Array.newInstance(Class, int)
   //@ requires iterable != null && type != null;
+  @GwtIncompatible // Array.newInstance(Class, int)
   public static <T> T[] toArray(Iterable<? extends T> iterable, Class<T> type) {
     return toArray(iterable, ObjectArrays.newArray(type, 0));
   }

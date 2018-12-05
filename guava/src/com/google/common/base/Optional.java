@@ -294,7 +294,7 @@ public abstract class Optional<T> implements Serializable {
    *
    * <p><b>Comparison to {@code java.util.Optional}:</b> no differences.
    */
-  //@ ensures \typeof(\result) == \type(boolean);
+  //@ also ensures \typeof(\result) == \type(boolean);
   @Override
   public abstract boolean equals(@Nullable Object object);
 
@@ -304,7 +304,7 @@ public abstract class Optional<T> implements Serializable {
    * <p><b>Comparison to {@code java.util.Optional}:</b> this class leaves the specific choice of
    * hash code unspecified, unlike the Java 8 equivalent.
    */
-  //@ ensures \typeof(\result) == \type(int);
+  //@ also ensures \typeof(\result) == \type(int);
   @Override
   public abstract int hashCode();
 
@@ -314,7 +314,7 @@ public abstract class Optional<T> implements Serializable {
    * <p><b>Comparison to {@code java.util.Optional}:</b> this class leaves the specific string
    * representation unspecified, unlike the Java 8 equivalent.
    */
-  //@ ensures \typeof(\result) == \type(String);
+  //@ also ensures \typeof(\result) == \type(String);
   @Override
   public abstract String toString();
 

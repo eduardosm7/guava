@@ -462,8 +462,8 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws IllegalArgumentException if two entries have the same key
    * @since 19.0
    */
-  //@ signals_only NullPointerException;
-  //@ signals_only IllegalArgumentException;
+  //@ signals (NullPointerException);
+  //@ signals (IllegalArgumentException);
   @Beta
   public static <K, V> ImmutableMap<K, V> copyOf(
       Iterable<? extends Entry<? extends K, ? extends V>> entries) {
@@ -541,7 +541,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @CanIgnoreReturnValue
   @Deprecated
   @Override
@@ -555,7 +555,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @CanIgnoreReturnValue
   @Deprecated
   @Override
@@ -569,7 +569,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final boolean replace(K key, V oldValue, V newValue) {
@@ -582,7 +582,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V replace(K key, V value) {
@@ -595,7 +595,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V computeIfAbsent(K key, Function<? super K, ? extends V> mappingFunction) {
@@ -608,7 +608,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V computeIfPresent(
@@ -622,7 +622,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V compute(K key, BiFunction<? super K, ? super V, ? extends V> remappingFunction) {
@@ -635,7 +635,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V merge(
@@ -649,7 +649,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final void putAll(Map<? extends K, ? extends V> map) {
@@ -662,7 +662,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final void replaceAll(BiFunction<? super K, ? super V, ? extends V> function) {
@@ -675,7 +675,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final V remove(Object o) {
@@ -688,7 +688,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final boolean remove(Object key, Object value) {
@@ -701,7 +701,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * @throws UnsupportedOperationException always
    * @deprecated Unsupported operation.
    */
-  //@ signals_only UnsupportedOperationException;
+  //@ also signals_only UnsupportedOperationException;
   @Deprecated
   @Override
   public final void clear() {
@@ -758,7 +758,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * Returns an immutable set of the keys in this map, in the same order that they appear in {@link
    * #entrySet}.
    */
-  //@ ensures \result != null;
+  //@ also ensures \result != null;
   @Override
   public ImmutableSet<K> keySet() {
     ImmutableSet<K> result = keySet;
@@ -797,7 +797,7 @@ public abstract class ImmutableMap<K, V> implements Map<K, V>, Serializable {
    * Returns an immutable collection of the values in this map, in the same order that they appear
    * in {@link #entrySet}.
    */
-  //@ ensures \result != null;
+  //@ also ensures \result != null;
   @Override
   public ImmutableCollection<V> values() {
     ImmutableCollection<V> result = values;

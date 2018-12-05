@@ -58,8 +58,8 @@ public interface Predicate<T> extends java.util.function.Predicate<T> {
    * @throws NullPointerException if {@code input} is null and this predicate does not accept null
    *     arguments
    */
-  @CanIgnoreReturnValue
   //@ signals_only NullPointerException;
+  @CanIgnoreReturnValue
   boolean apply(@Nullable T input);
 
   /**

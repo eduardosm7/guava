@@ -298,8 +298,8 @@ public abstract class BaseEncoding {
    *     string, or if {@code n <= 0}
    * @throws UnsupportedOperationException if this encoding already uses a separator
    */
-  //@ signals_only IllegalArgumentException;
-  //@ signals_only UnsupportedOperationException;
+  //@ signals (IllegalArgumentException);
+  //@ signals (UnsupportedOperationException);
   public abstract BaseEncoding withSeparator(String separator, int n);
 
   /**

@@ -498,6 +498,7 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
       return this;
     }
 
+    //@ also signals_only NullPointerException;
     @Override
     /**
      * Adds each element of {@code elements} to the {@code ImmutableSet}, ignoring duplicate
@@ -508,7 +509,6 @@ public abstract class ImmutableSet<E> extends ImmutableCollection<E> implements 
      * @throws NullPointerException if {@code elements} is null or contains a null element
      */
     @CanIgnoreReturnValue
-    //@ signals_only NullPointerException;
     public Builder<E> addAll(Iterable<? extends E> elements) {
       super.addAll(elements);
       return this;

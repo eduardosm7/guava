@@ -79,8 +79,8 @@ public final class Lists {
    * deprecated. Instead, use the {@code ArrayList} {@linkplain ArrayList#ArrayList() constructor}
    * directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond" syntax</a>.
    */
-  @GwtCompatible(serializable = true)
   //@ ensures \typeof(\result) == \typeof(ArrayList);
+  @GwtCompatible(serializable = true)
   public static <E> ArrayList<E> newArrayList() {
     return new ArrayList<>();
   }
@@ -99,11 +99,11 @@ public final class Lists {
    * (...))}, or for creating an empty list then calling {@link Collections#addAll}. This method is
    * not actually very useful and will likely be deprecated in the future.
    */
+  //@ requires elements != null;
+  //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
   @SafeVarargs
   @CanIgnoreReturnValue // TODO(kak): Remove this
   @GwtCompatible(serializable = true)
-  //@ requires elements != null;
-  //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
   public static <E> ArrayList<E> newArrayList(E... elements) {
     checkNotNull(elements); // for GWT
     // Avoid integer overflow when a large array is passed in
@@ -126,10 +126,10 @@ public final class Lists {
    * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
    * syntax</a>.
    */
-  @CanIgnoreReturnValue // TODO(kak): Remove this
-  @GwtCompatible(serializable = true)
   //@ requires elements != null;
   //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
+  @CanIgnoreReturnValue // TODO(kak): Remove this
+  @GwtCompatible(serializable = true)
   public static <E> ArrayList<E> newArrayList(Iterable<? extends E> elements) {
     checkNotNull(elements); // for GWT
     // Let ArrayList's sizing logic work, if possible
@@ -145,18 +145,18 @@ public final class Lists {
    * <p><b>Note:</b> if mutability is not required and the elements are non-null, use {@link
    * ImmutableList#copyOf(Iterator)} instead.
    */
-  @CanIgnoreReturnValue // TODO(kak): Remove this
-  @GwtCompatible(serializable = true)
   //@ requires elements != null;
   //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
+  @CanIgnoreReturnValue // TODO(kak): Remove this
+  @GwtCompatible(serializable = true)
   public static <E> ArrayList<E> newArrayList(Iterator<? extends E> elements) {
     ArrayList<E> list = newArrayList();
     Iterators.addAll(list, elements);
     return list;
   }
 
-  @VisibleForTesting
   //@ requires arraySize >= 0;
+  @VisibleForTesting
   static int computeArrayListCapacity(int arraySize) {
     checkNonnegative(arraySize, "arraySize");
 
@@ -180,9 +180,9 @@ public final class Lists {
    *     reaches {@code initialArraySize + 1}
    * @throws IllegalArgumentException if {@code initialArraySize} is negative
    */
-  @GwtCompatible(serializable = true)
   //@ requires initialArraySize >= 0;
   //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
+  @GwtCompatible(serializable = true)
   public static <E> ArrayList<E> newArrayListWithCapacity(int initialArraySize) {
     checkNonnegative(initialArraySize, "initialArraySize"); // for GWT.
     return new ArrayList<>(initialArraySize);
@@ -201,9 +201,9 @@ public final class Lists {
    *     elements
    * @throws IllegalArgumentException if {@code estimatedSize} is negative
    */
-  @GwtCompatible(serializable = true)
   //@ requires estimatedSize >= 0;
   //@ ensures \result != null && \typeof(\result) == \type(ArrayList);
+  @GwtCompatible(serializable = true)
   public static <E> ArrayList<E> newArrayListWithExpectedSize(int estimatedSize) {
     return new ArrayList<>(computeArrayListCapacity(estimatedSize));
   }
@@ -225,9 +225,8 @@ public final class Lists {
    * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
    * syntax</a>.
    */
-  @GwtCompatible(serializable = true)
-  //@ requires estimatedSize >= 0;
   //@ ensures \result != null && \typeof(\result) == \type(LinkedList);
+  @GwtCompatible(serializable = true)
   public static <E> LinkedList<E> newLinkedList() {
     return new LinkedList<>();
   }
@@ -249,9 +248,9 @@ public final class Lists {
    * constructor} directly, taking advantage of the new <a href="http://goo.gl/iz2Wi">"diamond"
    * syntax</a>.
    */
-  @GwtCompatible(serializable = true)
   //@ requires elements != null;
   //@ ensures \result != null && \typeof(\result) == \type(LinkedList);
+  @GwtCompatible(serializable = true)
   public static <E> LinkedList<E> newLinkedList(Iterable<? extends E> elements) {
     LinkedList<E> list = newLinkedList();
     Iterables.addAll(list, elements);
@@ -267,8 +266,8 @@ public final class Lists {
    * @return a new, empty {@code CopyOnWriteArrayList}
    * @since 12.0
    */
-  @GwtIncompatible // CopyOnWriteArrayList
   //@ ensures \result != null && \typeof(\result) == \type(CopyOnWriteArrayList);
+  @GwtIncompatible // CopyOnWriteArrayList
   public static <E> CopyOnWriteArrayList<E> newCopyOnWriteArrayList() {
     return new CopyOnWriteArrayList<>();
   }
@@ -280,9 +279,9 @@ public final class Lists {
    * @return a new {@code CopyOnWriteArrayList} containing those elements
    * @since 12.0
    */
-  @GwtIncompatible // CopyOnWriteArrayList
   //@ requires elements != null;
   //@ ensures \result != null && \typeof(\result) == \type(CopyOnWriteArrayList);
+  @GwtIncompatible // CopyOnWriteArrayList
   public static <E> CopyOnWriteArrayList<E> newCopyOnWriteArrayList(
       Iterable<? extends E> elements) {
     // We copy elements to an ArrayList first, rather than incurring the
@@ -345,15 +344,15 @@ public final class Lists {
       this.rest = checkNotNull(rest);
     }
 
+    //@ also ensures \result != null && \typeof(\result) == \type(int);
     @Override
-    //@ ensures \result != null && \typeof(\result) == \type(int);
     public int size() {
       return IntMath.saturatedAdd(rest.length, 1);
     }
 
+    //@ also requires index >= 0;
+    //@ also ensures \result != null;
     @Override
-    //@ requires index >= 0;
-    //@ ensures \result != null;
     public E get(int index) {
       // check explicitly so the IOOBE will have the right message
       checkElementIndex(index, size());
@@ -376,15 +375,15 @@ public final class Lists {
       this.rest = checkNotNull(rest);
     }
 
+    //@ also ensures \result != null && \typeof(\result) == \type(int);
     @Override
-    //@ ensures \result != null && \typeof(\result) == \type(int);
     public int size() {
       return IntMath.saturatedAdd(rest.length, 2);
     }
 
+    //@ also requires index >= 0;
+    //@ also ensures \result != null && \typeof(\result) == \type(int);
     @Override
-    //@ requires index >= 0;
-    //@ ensures \result != null && \typeof(\result) == \type(int);
     public E get(int index) {
       switch (index) {
         case 0:
@@ -515,9 +514,9 @@ public final class Lists {
    *     a provided list is null
    * @since 19.0
    */
-  @SafeVarargs
   //@ requires lists != null;
   //@ ensures \result != null && \typeof(\result) == \type(List);
+  @SafeVarargs
   public static <B> List<List<B>> cartesianProduct(List<? extends B>... lists) {
     return cartesianProduct(Arrays.asList(lists));
   }
@@ -587,15 +586,15 @@ public final class Lists {
       fromList.clear();
     }
 
-    @Override
     //@ also ensures \result >= 0;
+    @Override
     public int size() {
       return fromList.size();
     }
 
-    @Override
     //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(ListIterator);
+    @Override
     public ListIterator<T> listIterator(final int index) {
       return new TransformedListIterator<F, T>(fromList.listIterator(index)) {
         @Override
@@ -605,9 +604,9 @@ public final class Lists {
       };
     }
 
-    @Override
     //@ also requires filter != null;
     //@ also ensures \result != null && \typeof(\result) == \type(boolean);
+    @Override
     public boolean removeIf(Predicate<? super T> filter) {
       checkNotNull(filter);
       return fromList.removeIf(element -> filter.test(function.apply(element)));
@@ -638,8 +637,8 @@ public final class Lists {
       fromList.clear();
     }
 
-    @Override
     //@ also requires index >= 0;
+    @Override
     public T get(int index) {
       return function.apply(fromList.get(index));
     }
@@ -649,9 +648,9 @@ public final class Lists {
       return listIterator();
     }
 
-    @Override
     //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(ListIterator);
+    @Override
     public ListIterator<T> listIterator(int index) {
       return new TransformedListIterator<F, T>(fromList.listIterator(index)) {
         @Override
@@ -661,29 +660,29 @@ public final class Lists {
       };
     }
 
-    @Override
     //@ also ensures \result != null && \typeof(\result) == \type(boolean);
+    @Override
     public boolean isEmpty() {
       return fromList.isEmpty();
     }
 
-    @Override
     //@ also requires filter != null;
     //@ also ensures \result != null && \typeof(\result) == \type(boolean);
+    @Override
     public boolean removeIf(Predicate<? super T> filter) {
       checkNotNull(filter);
       return fromList.removeIf(element -> filter.test(function.apply(element)));
     }
 
-    @Override
     //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(ListIterator);
+    @Override
     public T remove(int index) {
       return function.apply(fromList.remove(index));
     }
 
-    @Override
     //@ also ensures \result != null && \typeof(\result) == \type(int);
+    @Override
     public int size() {
       return fromList.size();
     }
@@ -723,9 +722,9 @@ public final class Lists {
       this.size = size;
     }
 
-    @Override
     //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(List);
+    @Override
     public List<T> get(int index) {
       checkElementIndex(index, size());
       int start = index * size;
@@ -733,14 +732,14 @@ public final class Lists {
       return list.subList(start, end);
     }
 
-    @Override
     //@ also ensures \result >= 0;
+    @Override
     public int size() {
       return IntMath.divide(list.size(), size, RoundingMode.CEILING);
     }
 
-    @Override
     //@ also ensures \result != null && \typeof(\result) == \type(boolean);
+    @Override
     public boolean isEmpty() {
       return list.isEmpty();
     }
@@ -772,9 +771,9 @@ public final class Lists {
    * @return an {@code List<Character>} view of the character sequence
    * @since 7.0
    */
-  @Beta
   //@ requires string != sequence;
   //@ ensures \result != null && \typeof(\result) == \type(List);
+  @Beta
   public static List<Character> charactersOf(CharSequence sequence) {
     return new CharSequenceAsList(checkNotNull(sequence));
   }
@@ -788,44 +787,44 @@ public final class Lists {
       this.string = string;
     }
 
-    @Override
     //@ also requires object != null;
     //@ also ensures \result != null && \typeof(\result) == \type(int);
+    @Override
     public int indexOf(@Nullable Object object) {
       return (object instanceof Character) ? string.indexOf((Character) object) : -1;
     }
 
-    @Override
     //@ also requires object != null;
     //@ also ensures \result != null && \typeof(\result) == \type(int);
+    @Override
     public int lastIndexOf(@Nullable Object object) {
       return (object instanceof Character) ? string.lastIndexOf((Character) object) : -1;
     }
 
-    @Override
     //@ also requires fromIndex != null && toIndex != null;
     //@ also ensures \result != null && \typeof(\result) == \type(ImmutableList);
+    @Override
     public ImmutableList<Character> subList(int fromIndex, int toIndex) {
       checkPositionIndexes(fromIndex, toIndex, size()); // for GWT
       return charactersOf(string.substring(fromIndex, toIndex));
     }
 
-    @Override
     //@ also ensures \result == false;
+    @Override
     boolean isPartialView() {
       return false;
     }
 
-    @Override
-    //@ also index >= 0;
+    //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(Character);
+    @Override
     public Character get(int index) {
       checkElementIndex(index, size()); // for GWT
       return string.charAt(index);
     }
 
-    @Override
     //@ also ensures \result >= 0 && \typeof(\result) == \type(int);
+    @Override
     public int size() {
       return string.length();
     }
@@ -838,16 +837,16 @@ public final class Lists {
       this.sequence = sequence;
     }
 
-    @Override
-    //@ also index >= 0;
+    //@ also requires index >= 0;
     //@ also ensures \result != null && \typeof(\result) == \type(Character);
+    @Override
     public Character get(int index) {
       checkElementIndex(index, size()); // for GWT
       return sequence.charAt(index);
     }
 
-    @Override
     //@ also ensures \result >= 0 && \typeof(\result) == \type(int);
+    @Override
     public int size() {
       return sequence.length();
     }
@@ -905,8 +904,8 @@ public final class Lists {
       return size - index;
     }
 
-    @Override
     //@ also requires index >= 0;
+    @Override
     public void add(int index, @Nullable T element) {
       forwardList.add(reversePosition(index), element);
     }
@@ -916,26 +915,26 @@ public final class Lists {
       forwardList.clear();
     }
 
-    @Override
     //@ also requires index >= 0;
+    @Override
     public T remove(int index) {
       return forwardList.remove(reverseIndex(index));
     }
 
-    @Override
     //@ also requires fromIndex != null && toIndex != null;
+    @Override
     protected void removeRange(int fromIndex, int toIndex) {
       subList(fromIndex, toIndex).clear();
     }
 
-    @Override
     //@ also requires index >= 0;
+    @Override
     public T set(int index, @Nullable T element) {
       return forwardList.set(reverseIndex(index), element);
     }
 
-    @Override
     //@ also requires index >= 0;
+    @Override
     public T get(int index) {
       return forwardList.get(reverseIndex(index));
     }
@@ -945,9 +944,9 @@ public final class Lists {
       return forwardList.size();
     }
 
-    @Override
     //@ also requires fromIndex != null && toIndex != null;
     //@ also ensures \result != null && \typeof(\result) == \type(List);
+    @Override
     public List<T> subList(int fromIndex, int toIndex) {
       checkPositionIndexes(fromIndex, toIndex, size());
       return reverse(forwardList.subList(reversePosition(toIndex), reversePosition(fromIndex)));
@@ -1049,8 +1048,8 @@ public final class Lists {
   }
 
   /** An implementation of {@link List#equals(Object)}. */
-  //@ also requires thisList != null;
-  //@ also ensures \result != null && \typeof(\result) == \type(boolean);
+  //@ requires thisList != null;
+  //@ ensures \result != null && \typeof(\result) == \type(boolean);
   static boolean equalsImpl(List<?> thisList, @Nullable Object other) {
     if (other == checkNotNull(thisList)) {
       return true;

@@ -163,7 +163,7 @@ public final class Preconditions {
   //@ requires \typeof(expression) == \type(boolean);
   //@ requires \typeof(errorMessageTemplate) == \type(String);
   //@ requires \typeof(errorMessageArgs) == \type(Object);
-  //@ if (!expression) signals_only IllegalArgumentException;
+  //@ signals (IllegalArgumentException) !expression;
   public static void checkArgument(
       boolean expression,
       @Nullable String errorMessageTemplate,
@@ -518,7 +518,7 @@ public final class Preconditions {
    * @see Verify#verify Verify.verify()
    */
   //@ requires \typeof(expression) == \type(boolean);
-  //@ if (!expression) signals_only IllegalArgumentException;
+  //@ signals (IllegalArgumentException) !expression;
   public static void checkState(boolean expression) {
     if (!expression) {
       throw new IllegalStateException();
@@ -537,7 +537,7 @@ public final class Preconditions {
    */
   //@ requires \typeof(expression) == \type(boolean);
   //@ requires \typeof(errorMessage) == \type(Object);
-  //@ if (!expression) signals_only IllegalArgumentException;
+  //@ signals (IllegalArgumentException) !expression;
   public static void checkState(boolean expression, @Nullable Object errorMessage) {
     if (!expression) {
       throw new IllegalStateException(String.valueOf(errorMessage));
@@ -562,7 +562,7 @@ public final class Preconditions {
   //@ requires \typeof(expression) == \type(boolean);
   //@ requires \typeof(errorMessageTemplate) == \type(String);
   //@ requires \typeof(errorMessageArgs) == \type(Object);
-  //@ if (!expression) signals_only IllegalArgumentException;
+  //@ signals (IllegalArgumentException) !expression;
   public static void checkState(
       boolean expression,
       @Nullable String errorMessageTemplate,
@@ -1379,8 +1379,8 @@ public final class Preconditions {
    */
   //@ requires \typeof(index) == \type(int);
   //@ requires \typeof(size) == \type(int);
-  //@ if (index < 0 || index >= size) signals_only IndexOutOfBoundsException;
-  //@ if (size < 0) signals_only IllegalArgumentException;
+  //@ signals (IndexOutOfBoundsException) index < 0 || index >= size;
+  //@ signals (IllegalArgumentException) (size < 0);
   @CanIgnoreReturnValue
   public static int checkElementIndex(int index, int size) {
     return checkElementIndex(index, size, "index");
@@ -1400,8 +1400,8 @@ public final class Preconditions {
   //@ requires \typeof(index) == \type(int);
   //@ requires \typeof(size) == \type(int);
   //@ requires \typeof(desc) == \type(String);
-  //@ if (index < 0 || index >= size) signals_only IndexOutOfBoundsException;
-  //@ if (size < 0) signals_only IllegalArgumentException;
+  //@ signals (IndexOutOfBoundsException) index < 0 || index >= size;
+  //@ signals (IllegalArgumentException) size < 0;
   @CanIgnoreReturnValue
   public static int checkElementIndex(int index, int size, @Nullable String desc) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
@@ -1433,8 +1433,8 @@ public final class Preconditions {
    */
   //@ requires \typeof(index) == \type(int);
   //@ requires \typeof(size) == \type(int);
-  //@ if (index < 0 || index > size) signals_only IndexOutOfBoundsException;
-  //@ if (size < 0) signals_only IllegalArgumentException;
+  //@ signals (IndexOutOfBoundsException) index < 0 || index > size;
+  //@ signals (IllegalArgumentException) size < 0;
   @CanIgnoreReturnValue
   public static int checkPositionIndex(int index, int size) {
     return checkPositionIndex(index, size, "index");
@@ -1454,8 +1454,8 @@ public final class Preconditions {
   //@ requires \typeof(index) == \type(int);
   //@ requires \typeof(size) == \type(int);
   //@ requires \typeof(desc) == \type(String);
-  //@ if (index < 0 || index > size) signals_only IndexOutOfBoundsException;
-  //@ if (size < 0) signals_only IllegalArgumentException;
+  //@ signals (IndexOutOfBoundsException) index < 0 || index > size;
+  //@ signals (IllegalArgumentException) size < 0;
   @CanIgnoreReturnValue
   public static int checkPositionIndex(int index, int size, @Nullable String desc) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
@@ -1490,10 +1490,10 @@ public final class Preconditions {
   //@ requires \typeof(start) == \type(int);
   //@ requires \typeof(end) == \type(int);
   //@ requires \typeof(size) == \type(int);
-  //@ if (start < 0 || start > size) signals_only IndexOutOfBoundsException;
-  //@ if (end < 0 || end > size) signals_only IndexOutOfBoundsException;
-  //@ if (end < start) signals_only IndexOutOfBoundsException;
-  //@ if (size < 0) signals_only IllegalArgumentException;
+  //@ signals (IndexOutOfBoundsException) start < 0 || start > size;
+  //@ signals (IndexOutOfBoundsException) end < 0 || end > size;
+  //@ signals (IndexOutOfBoundsException) end < start;
+  //@ signals (IllegalArgumentException) size < 0;
   public static void checkPositionIndexes(int start, int end, int size) {
     // Carefully optimized for execution by hotspot (explanatory comment above)
     if (start < 0 || end < start || end > size) {
